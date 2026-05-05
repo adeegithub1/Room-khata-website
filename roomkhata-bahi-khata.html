@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Khata Pro — Your Digital Bahi Khata</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Poppins', 'sans-serif'],
+          serif: ['Playfair Display', 'serif'],
+        },
+        colors: {
+          ink:    { DEFAULT: '#1e3a8a', light: '#2d52b8', dark: '#172d6e' },
+          maroon: { DEFAULT: '#9f1239', light: '#be123c', dark: '#881030' },
+          paper:  { DEFAULT: '#fdfbf7', dark: '#f5f0e8', rule: '#e8e3da', line: '#ddd8ce' },
+          charcoal: '#2d2d2d',
+          sepia:  '#7c6a52',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --ink:    #1e3a8a;
+    --maroon: #9f1239;
+    --paper:  #fdfbf7;
+    --paper2: #f5f0e8;
+    --rule:   #e0dbd2;
+    --sepia:  #7c6a52;
+    --charcoal: #2d2d2d;
+    --line-gap: 32px;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg transform='rotate(-35 14 14)'%3E%3Crect x='12' y='2' width='4' height='16' rx='1' fill='%231e3a8a'/%3E%3Cpolygon points='12,18 16,18 14,24' fill='%239f1239'/%3E%3Crect x='12' y='2' width='4' height='4' rx='1' fill='%234a4a4a'/%3E%3Crect x='12.5' y='5' width='3' height='12' fill='%23f5d9a0'/%3E%3C/g%3E%3C/svg%3E") 4 24, auto;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  /* ─── RULED PAPER BACKGROUND ─── */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--paper);
+    color: var(--charcoal);
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px);
+    background-size: 100% var(--line-gap);
+    background-position: 0 56px;
+    overflow-x: hidden;
+  }
+
+  /* ─── MARGIN LINE (left red vertical) ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    left: 72px;
+    top: 0; bottom: 0;
+    width: 1.5px;
+    background: rgba(159,18,57,.18);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    body::before { display: none; }
+  }
+
+  /* ─── HEADINGS ─── */
+  .heading-serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    color: var(--ink);
+  }
+  .heading-serif-italic {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--maroon);
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    background: rgba(253,251,247,.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1.5px solid var(--rule);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0, var(--ink) 8px, transparent 8px, transparent 14px);
+    opacity: .12;
+  }
+
+  /* ─── LOGO BOX ─── */
+  .logo-box {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    box-shadow: 2px 3px 0 rgba(30,58,138,.3);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .logo-box::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.15);
+  }
+
+  /* ─── PAPER CARD ─── */
+  .paper-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 3px 4px 0 rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+  }
+  .paper-card:hover {
+    transform: translateY(-4px) rotate(.3deg);
+    box-shadow: 6px 10px 0 rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+  }
+
+  /* Folded corner */
+  .paper-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 24px; height: 24px;
+    background: linear-gradient(225deg, var(--paper2) 50%, transparent 50%);
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+
+  /* Top ruled lines on cards */
+  .paper-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--ink);
+    border-radius: 4px 4px 0 0;
+    opacity: .8;
+  }
+  .paper-card.maroon-top::before { background: var(--maroon); }
+  .paper-card.emerald-top::before { background: #065f46; }
+  .paper-card.amber-top::before   { background: #92400e; }
+
+  /* ─── NOTEPAD CARD (lined) ─── */
+  .notepad-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 3px 4px 0 rgba(0,0,0,.06);
+    position: relative;
+    background-image:
+      linear-gradient(var(--paper2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(159,18,57,.06) 1px, transparent 1px);
+    background-size: 100% 28px, 54px 100%;
+    background-position: 0 32px, 54px 0;
+  }
+
+  /* ─── STAMP / BADGE ─── */
+  .stamp {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 2px solid var(--maroon);
+    border-radius: 4px;
+    padding: 4px 12px;
+    color: var(--maroon);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+    position: relative;
+  }
+  .stamp::before {
+    content: '';
+    position: absolute; inset: 2px;
+    border: 1px dashed rgba(159,18,57,.3);
+    border-radius: 2px;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn-ink {
+    background: var(--ink);
+    color: white;
+    font-weight: 700;
+    border-radius: 6px;
+    box-shadow: 3px 4px 0 rgba(30,58,138,.35);
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    outline: none;
+  }
+  .btn-ink:hover { transform: translate(-1px,-2px); box-shadow: 5px 6px 0 rgba(30,58,138,.3); }
+  .btn-ink:active { transform: translate(1px,1px); box-shadow: 1px 2px 0 rgba(30,58,138,.3); }
+
+  .btn-maroon {
+    background: var(--maroon);
+    color: white;
+    font-weight: 700;
+    border-radius: 6px;
+    box-shadow: 3px 4px 0 rgba(159,18,57,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-maroon:hover { transform: translate(-1px,-2px); box-shadow: 5px 6px 0 rgba(159,18,57,.3); }
+  .btn-maroon:active { transform: translate(1px,1px); box-shadow: 1px 2px 0 rgba(159,18,57,.3); }
+
+  .btn-outline-ink {
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    font-weight: 700;
+    border-radius: 6px;
+    background: transparent;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .btn-outline-ink:hover {
+    background: var(--ink);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  /* ─── STORE BUTTONS ─── */
+  .store-btn {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--ink);
+    color: white;
+    border-radius: 10px;
+    padding: 12px 22px;
+    box-shadow: 4px 5px 0 rgba(30,58,138,.3);
+    transition: transform .25s, box-shadow .25s;
+    border: 1px solid rgba(255,255,255,.1);
+    text-decoration: none;
+    min-width: 180px;
+  }
+  .store-btn:hover { transform: translate(-2px,-3px); box-shadow: 7px 8px 0 rgba(30,58,138,.25); }
+  .store-btn.maroon-store {
+    background: #1c1c1e;
+    box-shadow: 4px 5px 0 rgba(0,0,0,.35);
+  }
+  .store-btn.maroon-store:hover { box-shadow: 7px 8px 0 rgba(0,0,0,.28); }
+  .store-btn-icon { font-size: 28px; flex-shrink: 0; }
+  .store-btn-text p:first-child { font-size: 10px; opacity: .7; font-weight: 500; letter-spacing: .04em; }
+  .store-btn-text p:last-child { font-size: 16px; font-weight: 700; line-height: 1.2; }
+
+  /* ─── PHONE MOCKUP ─── */
+  .phone-wrap {
+    animation: phoneFloat 5s ease-in-out infinite;
+    position: relative;
+    display: inline-block;
+  }
+  @keyframes phoneFloat {
+    0%,100% { transform: translateY(0px) rotate(.8deg); }
+    50%      { transform: translateY(-18px) rotate(-.8deg); }
+  }
+
+  .phone-outer {
+    width: 260px;
+    border-radius: 44px;
+    background: linear-gradient(145deg, #2a2a2e 0%, #1a1a1e 60%, #0d0d10 100%);
+    padding: 14px;
+    box-shadow:
+      0 60px 100px rgba(0,0,0,.35),
+      0 20px 40px rgba(0,0,0,.2),
+      inset 0 1px 0 rgba(255,255,255,.1),
+      inset 0 -1px 0 rgba(0,0,0,.3);
+    position: relative;
+  }
+  .phone-outer::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 44px;
+    border: 1px solid rgba(255,255,255,.08);
+    pointer-events: none;
+  }
+  /* Side buttons */
+  .phone-outer::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: 100px;
+    width: 3px; height: 50px;
+    background: #1a1a1e;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 60px 0 #1a1a1e, 0 -70px 0 #1a1a1e, 0 -90px 0 #1a1a1e;
+  }
+
+  .phone-screen {
+    border-radius: 32px;
+    background: var(--paper);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(0,0,0,.15);
+  }
+  .phone-notch {
+    width: 80px; height: 22px;
+    background: #0d0d10;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px;
+    position: relative;
+    z-index: 5;
+  }
+  .phone-notch-camera {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #2a2a2e;
+    border: 1px solid #3a3a3e;
+  }
+  .phone-notch-speaker {
+    width: 26px; height: 4px;
+    border-radius: 2px;
+    background: #2a2a2e;
+  }
+
+  /* Phone screen UI */
+  .phone-ui { padding: 10px 10px 14px; }
+  .phone-header {
+    background: var(--ink);
+    margin: 0 -10px;
+    padding: 10px 12px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .phone-header::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,.06);
+    border-radius: 50%;
+  }
+  .phone-stat {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 7px 8px;
+    backdrop-filter: blur(4px);
+  }
+  .phone-room-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 9px;
+  }
+  .phone-room-row:last-child { border-bottom: none; }
+  .room-badge {
+    font-size: 8px; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .badge-paid { background: #dcfce7; color: #166534; }
+  .badge-due  { background: #fee2e2; color: #991b1b; }
+  .badge-part { background: #fef3c7; color: #92400e; }
+
+  /* Shadow under phone */
+  .phone-shadow {
+    width: 200px;
+    height: 20px;
+    background: radial-gradient(ellipse, rgba(0,0,0,.25) 0%, transparent 70%);
+    margin: 0 auto;
+    margin-top: -10px;
+    border-radius: 50%;
+    animation: shadowPulse 5s ease-in-out infinite;
+  }
+  @keyframes shadowPulse {
+    0%,100% { transform: scaleX(1); opacity: .7; }
+    50%      { transform: scaleX(.8); opacity: .4; }
+  }
+
+  /* ─── SECTION DIVIDER (ruled line with text) ─── */
+  .ruled-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 8px 0;
+  }
+  .ruled-divider::before, .ruled-divider::after {
+    content: ''; flex: 1;
+    height: 1px; background: var(--rule);
+  }
+
+  /* ─── FAQ ACCORDION ─── */
+  .faq-item {
+    border-bottom: 1px solid var(--rule);
+    background: #fff;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--rule); }
+  .faq-trigger {
+    width: 100%; text-align: left;
+    padding: 18px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: none; border: none; outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; font-size: 14px;
+    color: var(--ink);
+    transition: background .2s;
+  }
+  .faq-trigger:hover { background: var(--paper2); }
+  .faq-icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform .3s, background .3s;
+  }
+  .faq-trigger.open .faq-icon {
+    transform: rotate(45deg);
+    background: var(--maroon);
+  }
+  .faq-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .4s cubic-bezier(.4,0,.2,1), padding .4s;
+    padding: 0 20px;
+  }
+  .faq-body.open {
+    max-height: 200px;
+    padding: 0 20px 18px;
+  }
+
+  /* ─── FADE-UP ANIMATION ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: .1s; }
+  .delay-2 { transition-delay: .2s; }
+  .delay-3 { transition-delay: .3s; }
+  .delay-4 { transition-delay: .4s; }
+  .delay-5 { transition-delay: .5s; }
+  .delay-6 { transition-delay: .6s; }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sepia);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 0 0 28px;
+    height: 1px; background: var(--sepia);
+    opacity: .5;
+  }
+
+  /* ─── WATERMARK ─── */
+  .watermark {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; font-weight: 900;
+    color: var(--ink); opacity: .025;
+    user-select: none; pointer-events: none;
+    white-space: nowrap;
+    transform: rotate(-15deg);
+  }
+
+  /* ─── FEATURE ICON BOX ─── */
+  .icon-box {
+    width: 52px; height: 52px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    border: 1.5px solid;
+    position: relative;
+  }
+  .icon-box::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; right: -3px;
+    inset: auto; width: 100%; height: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,.1);
+    z-index: -1;
+    background: rgba(0,0,0,.06);
+  }
+
+  /* ─── MOBILE MENU ─── */
+  #mobile-nav { display: none; }
+  #mobile-nav.open { display: block; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--paper2);
+    border-top: 2px solid var(--rule);
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0, var(--ink) 20px, var(--maroon) 20px, var(--maroon) 40px);
+    opacity: .2;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 7px; }
+  ::-webkit-scrollbar-track { background: var(--paper2); }
+  ::-webkit-scrollbar-thumb { background: var(--sepia); border-radius: 4px; opacity: .4; }
+
+  /* ─── CONTACT CARD ─── */
+  .contact-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff;
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    padding: 10px 18px;
+    font-weight: 600;
+    color: var(--ink);
+    box-shadow: 2px 3px 0 rgba(0,0,0,.07);
+    transition: transform .2s, box-shadow .2s;
+    text-decoration: none;
+  }
+  .contact-tag:hover {
+    transform: translate(-1px,-2px);
+    box-shadow: 4px 5px 0 rgba(0,0,0,.1);
+  }
+
+  /* ─── RATING STARS ─── */
+  .star-row { color: #d97706; font-size: 13px; letter-spacing: 2px; }
+
+  /* ─── RULED SECTION BG ─── */
+  .ruled-section {
+    background-color: #f9f5ef;
+    background-image: linear-gradient(#e0dbd2 1px, transparent 1px);
+    background-size: 100% 32px;
+    background-position: 0 0;
+  }
+
+  /* number lozenge */
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white;
+    font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 2px 3px 0 rgba(30,58,138,.3);
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  .testi {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px;
+    box-shadow: 3px 4px 0 rgba(0,0,0,.06);
+    position: relative;
+  }
+  .testi::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    color: var(--ink);
+    opacity: .15;
+    position: absolute;
+    top: 8px; left: 16px;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════ -->
+<nav>
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="logo-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10L12 3l9 7"/><path d="M5 10v11a2 2 0 002 2h10a2 2 0 002-2V10"/>
+          <rect x="8" y="10" width="8" height="10" rx="1"/><path d="M10 13h4"/><path d="M10 16h4"/>
+        </svg>
+      </div>
+      <div>
+        <p class="font-serif font-black text-[17px] leading-tight text-ink">Room<span style="color:var(--maroon)">Khata</span> <span class="text-sm font-sans font-700 text-ink">Pro</span></p>
+        <p style="font-size:7px; letter-spacing:.25em; color:var(--sepia); font-weight:700; text-transform:uppercase; line-height:1;">RENT · TRACK · RELAX</p>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#features" class="text-sm font-600 text-charcoal hover:text-ink transition-colors" style="color:var(--charcoal)">Features</a>
+      <a href="#support" class="text-sm font-600 hover:text-ink transition-colors" style="color:var(--charcoal)">Support</a>
+      <a href="#faq" class="text-sm font-600 hover:text-ink transition-colors" style="color:var(--charcoal)">FAQs</a>
+    </div>
+
+    <!-- CTA -->
+    <div class="hidden md:flex items-center gap-3">
+      <a href="#download" class="btn-ink px-5 py-2 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-download text-xs"></i> Download App
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden p-2 flex flex-col gap-1.5" onclick="toggleNav()">
+      <span class="w-5 h-0.5 rounded" style="background:var(--ink)"></span>
+      <span class="w-5 h-0.5 rounded" style="background:var(--ink)"></span>
+      <span class="w-4 h-0.5 rounded" style="background:var(--maroon)"></span>
+    </button>
+  </div>
+
+  <!-- Mobile nav -->
+  <div id="mobile-nav" class="border-t" style="border-color:var(--rule)">
+    <div class="px-6 py-4 flex flex-col gap-3" style="background:var(--paper2)">
+      <a href="#features" class="text-sm font-600 py-2 border-b" style="color:var(--ink); border-color:var(--rule);" onclick="toggleNav()">Features</a>
+      <a href="#support" class="text-sm font-600 py-2 border-b" style="color:var(--ink); border-color:var(--rule);" onclick="toggleNav()">Support</a>
+      <a href="#faq" class="text-sm font-600 py-2 border-b" style="color:var(--ink); border-color:var(--rule);" onclick="toggleNav()">FAQs</a>
+      <a href="#download" class="btn-maroon px-5 py-2.5 text-sm text-center mt-1">Download App</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════ -->
+<section class="relative overflow-hidden pt-16 pb-20" id="home">
+  <div class="watermark" style="top:60px; left:30%;">BAHI KHATA</div>
+
+  <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+    <!-- Left: Copy -->
+    <div style="animation: fadeInLeft .8s ease both;">
+      <div class="section-label mb-6 fade-up">India's #1 Rent Management App</div>
+
+      <div class="stamp mb-6 fade-up delay-1" style="display:inline-flex;">
+        <i class="fa-solid fa-star text-xs" style="color:var(--maroon)"></i>
+        New: WhatsApp Auto-Reminders
+      </div>
+
+      <h1 class="heading-serif text-5xl md:text-6xl leading-tight mb-4 fade-up delay-1">
+        Your Digital<br>
+        <span class="heading-serif-italic">Bahi Khata</span><br>
+        for Room Rents.
+      </h1>
+
+      <p class="text-base leading-relaxed mb-8 fade-up delay-2" style="color:var(--sepia); max-width:480px;">
+        The easiest way to manage tenants, collect rent, and track dues — all from your phone. No more missed payments or lost receipts. Just clear, organised records like a <em>real</em> bahi khata, but smarter.
+      </p>
+
+      <!-- Store buttons -->
+      <div id="download" class="flex flex-wrap gap-4 mb-10 fade-up delay-3">
+        <a href="#" class="store-btn">
+          <i class="fa-brands fa-google-play store-btn-icon" style="color:#34d399;"></i>
+          <div class="store-btn-text">
+            <p>GET IT ON</p>
+            <p>Google Play</p>
+          </div>
+        </a>
+        <a href="#" class="store-btn maroon-store">
+          <i class="fa-brands fa-apple store-btn-icon"></i>
+          <div class="store-btn-text">
+            <p>DOWNLOAD ON THE</p>
+            <p>App Store</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Trust row -->
+      <div class="flex flex-wrap items-center gap-6 fade-up delay-4">
+        <div>
+          <div class="star-row mb-0.5">★★★★★</div>
+          <p class="text-xs font-600" style="color:var(--sepia);">4.9 · 12,000+ Reviews</p>
+        </div>
+        <div style="width:1px; height:32px; background:var(--rule);"></div>
+        <div>
+          <p class="text-lg font-black" style="color:var(--ink);">50,000+</p>
+          <p class="text-xs font-600" style="color:var(--sepia);">Active Landlords</p>
+        </div>
+        <div style="width:1px; height:32px; background:var(--rule);"></div>
+        <div>
+          <p class="text-lg font-black" style="color:var(--ink);">₹200 Cr+</p>
+          <p class="text-xs font-600" style="color:var(--sepia);">Rent Collected</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Phone mockup -->
+    <div class="flex flex-col items-center fade-up delay-2 hidden lg:flex">
+      <div class="phone-wrap">
+        <div class="phone-outer">
+          <div class="phone-screen">
+            <!-- Notch -->
+            <div class="phone-notch">
+              <div class="phone-notch-camera"></div>
+              <div class="phone-notch-speaker"></div>
+              <div class="phone-notch-camera"></div>
+            </div>
+
+            <!-- App UI -->
+            <div class="phone-ui">
+              <!-- Header bar -->
+              <div class="phone-header -mx-2.5 -mt-2.5 mb-3 px-3 pb-3 rounded-b-2xl" style="background:var(--ink);">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <p style="color:rgba(255,255,255,.55); font-size:7px; font-weight:600; text-transform:uppercase; letter-spacing:.1em;">Good Morning 🌤</p>
+                    <p style="color:white; font-size:13px; font-weight:800; font-family:'Playfair Display',serif;">Sharma Ji</p>
+                  </div>
+                  <div style="width:28px;height:28px; border-radius:50%; background:rgba(255,255,255,.15); display:flex;align-items:center;justify-content:center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M3 10L12 3l9 7"/><path d="M5 10v11a2 2 0 002 2h10a2 2 0 002-2V10"/><rect x="8" y="10" width="8" height="10" rx="1"/></svg>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="phone-stat">
+                    <p style="color:rgba(255,255,255,.5);font-size:7px;font-weight:700;text-transform:uppercase;">Collected</p>
+                    <p style="color:white;font-size:13px;font-weight:800;">₹42,000</p>
+                  </div>
+                  <div class="phone-stat">
+                    <p style="color:rgba(255,255,255,.5);font-size:7px;font-weight:700;text-transform:uppercase;">Pending</p>
+                    <p style="color:#fca5a5;font-size:13px;font-weight:800;">₹8,500</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room list -->
+              <p style="font-size:8px;font-weight:700;color:var(--sepia);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;">Sunrise Apartments</p>
+              <div style="background:#fff;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:10px;">
+                <div class="phone-room-row px-2">
+                  <div>
+                    <p style="font-weight:700;color:var(--charcoal);font-size:9.5px;">Room 101</p>
+                    <p style="color:var(--sepia);font-size:8px;">Raju Kumar</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="room-badge badge-paid">✓ Paid</span>
+                    <p style="color:var(--sepia);font-size:7px;margin-top:1px;">₹7,000</p>
+                  </div>
+                </div>
+                <div class="phone-room-row px-2">
+                  <div>
+                    <p style="font-weight:700;color:var(--charcoal);font-size:9.5px;">Room 102</p>
+                    <p style="color:var(--sepia);font-size:8px;">Meena Devi</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="room-badge badge-due">Due</span>
+                    <p style="color:var(--sepia);font-size:7px;margin-top:1px;">₹6,500</p>
+                  </div>
+                </div>
+                <div class="phone-room-row px-2">
+                  <div>
+                    <p style="font-weight:700;color:var(--charcoal);font-size:9.5px;">Room 103</p>
+                    <p style="color:var(--sepia);font-size:8px;">Suresh Patel</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="room-badge badge-part">Partial</span>
+                    <p style="color:var(--sepia);font-size:7px;margin-top:1px;">₹4,000</p>
+                  </div>
+                </div>
+                <div class="phone-room-row px-2">
+                  <div>
+                    <p style="font-weight:700;color:var(--charcoal);font-size:9.5px;">Room 104</p>
+                    <p style="color:var(--sepia);font-size:8px;">Anita Singh</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="room-badge badge-paid">✓ Paid</span>
+                    <p style="color:var(--sepia);font-size:7px;margin-top:1px;">₹8,000</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick action row -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+                <div style="background:var(--ink);border-radius:8px;padding:7px 4px;text-align:center;">
+                  <i class="fa-solid fa-plus" style="color:white;font-size:10px;"></i>
+                  <p style="color:white;font-size:7px;font-weight:700;margin-top:2px;">Add Room</p>
+                </div>
+                <div style="background:var(--maroon);border-radius:8px;padding:7px 4px;text-align:center;">
+                  <i class="fa-brands fa-whatsapp" style="color:white;font-size:10px;"></i>
+                  <p style="color:white;font-size:7px;font-weight:700;margin-top:2px;">Remind</p>
+                </div>
+                <div style="background:#065f46;border-radius:8px;padding:7px 4px;text-align:center;">
+                  <i class="fa-solid fa-receipt" style="color:white;font-size:10px;"></i>
+                  <p style="color:white;font-size:7px;font-weight:700;margin-top:2px;">Receipt</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-shadow"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     FEATURES SECTION
+════════════════════════════════════════ -->
+<section id="features" class="ruled-section py-24 relative overflow-hidden">
+  <div class="watermark" style="bottom:0; right:5%; font-size:90px;">FEATURES</div>
+
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
+
+    <div class="text-center mb-16 fade-up">
+      <div class="section-label justify-center mb-4">What's Inside</div>
+      <h2 class="heading-serif text-4xl md:text-5xl mb-4">
+        Every Tool a Landlord Needs
+      </h2>
+      <p class="text-base max-w-xl mx-auto" style="color:var(--sepia);">
+        Built from real problems faced by Indian landlords. No fluff, just the features that actually matter.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+
+      <!-- Feature 1 -->
+      <div class="paper-card p-6 fade-up delay-1">
+        <div class="icon-box mb-5" style="background:#eff6ff; border-color:#bfdbfe; color:var(--ink);">
+          <i class="fa-solid fa-id-card"></i>
+        </div>
+        <h3 class="font-serif font-700 text-base mb-2" style="color:var(--ink);">Smart KYC</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--sepia);">Collect tenant names, phone numbers, and Aadhaar details digitally through a magic link. No forms, no queues.</p>
+        <div class="mt-4 flex items-center gap-1.5" style="color:var(--ink); font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-arrow-right text-xs"></i> One-tap tenant setup
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="paper-card maroon-top p-6 fade-up delay-2">
+        <div class="icon-box mb-5" style="background:#fff1f2; border-color:#fecdd3; color:var(--maroon);">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <h3 class="font-serif font-700 text-base mb-2" style="color:var(--maroon);">WhatsApp Reminders</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--sepia);">Auto-send personalised rent reminders to all pending tenants with one tap. They pay, you relax.</p>
+        <div class="mt-4 flex items-center gap-1.5" style="color:var(--maroon); font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-arrow-right text-xs"></i> Bulk send in 2 seconds
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="paper-card emerald-top p-6 fade-up delay-3">
+        <div class="icon-box mb-5" style="background:#f0fdf4; border-color:#bbf7d0; color:#065f46;">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <h3 class="font-serif font-700 text-base mb-2" style="color:#065f46;">UPI Payments</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--sepia);">Your UPI QR code displayed for tenants. Payments tracked automatically via GPay, PhonePe, or Paytm.</p>
+        <div class="mt-4 flex items-center gap-1.5" style="color:#065f46; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-arrow-right text-xs"></i> Instant collection
+        </div>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="paper-card amber-top p-6 fade-up delay-4">
+        <div class="icon-box mb-5" style="background:#fffbeb; border-color:#fde68a; color:#92400e;">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+        <h3 class="font-serif font-700 text-base mb-2" style="color:#92400e;">Digital Receipts</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--sepia);">Auto-generate professional rent receipts after each payment. Share on WhatsApp instantly — no printing.</p>
+        <div class="mt-4 flex items-center gap-1.5" style="color:#92400e; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-arrow-right text-xs"></i> Professional receipts
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Secondary features row -->
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <div class="notepad-card p-6 fade-up delay-1">
+        <div class="flex items-start gap-4">
+          <div class="icon-box" style="background:#f0f9ff; border-color:#bae6fd; color:#0369a1;">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h3 class="font-700 text-sm mb-1" style="color:var(--ink);">Electricity Calculator</h3>
+            <p class="text-xs leading-relaxed" style="color:var(--sepia);">Enter meter readings, get per-unit charges auto-calculated and added to the monthly bill.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notepad-card p-6 fade-up delay-2">
+        <div class="flex items-start gap-4">
+          <div class="icon-box" style="background:#fdf4ff; border-color:#e9d5ff; color:#7c3aed;">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <div>
+            <h3 class="font-700 text-sm mb-1" style="color:var(--ink);">Expense Tracking</h3>
+            <p class="text-xs leading-relaxed" style="color:var(--sepia);">Log repairs, maintenance, and other costs. See your real net income versus outgoing expenses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notepad-card p-6 fade-up delay-3">
+        <div class="flex items-start gap-4">
+          <div class="icon-box" style="background:#fff7ed; border-color:#fed7aa; color:#c2410c;">
+            <i class="fa-solid fa-file-export"></i>
+          </div>
+          <div>
+            <h3 class="font-700 text-sm mb-1" style="color:var(--ink);">PDF Report Export</h3>
+            <p class="text-xs leading-relaxed" style="color:var(--sepia);">Generate monthly payment reports as PDF. Share with your CA or file for tax purposes.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" style="background:var(--paper);">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="text-center mb-16 fade-up">
+      <div class="section-label justify-center mb-4">Simple Process</div>
+      <h2 class="heading-serif text-4xl md:text-5xl mb-4">Setup in 3 Easy Steps</h2>
+      <p class="text-base" style="color:var(--sepia);">No training needed. No spreadsheets. Just open the app and follow along.</p>
+    </div>
+
+    <div class="relative">
+      <!-- Dotted connecting line -->
+      <div class="hidden md:block absolute top-5 left-0 right-0 h-px" style="border-top: 2px dashed var(--rule); top:18px; left:14%; right:14%; z-index:0;"></div>
+
+      <div class="grid md:grid-cols-3 gap-8 relative z-10">
+
+        <div class="fade-up delay-1 text-center">
+          <div class="flex justify-center mb-5">
+            <div class="step-num" style="background:var(--ink);">1</div>
+          </div>
+          <div class="paper-card p-6">
+            <div class="text-3xl mb-4">🏢</div>
+            <h3 class="font-serif font-700 text-base mb-2" style="color:var(--ink);">Add Your Property</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--sepia);">Enter building name, room numbers, rent amounts, and security deposits. Done in under 2 minutes.</p>
+          </div>
+        </div>
+
+        <div class="fade-up delay-2 text-center">
+          <div class="flex justify-center mb-5">
+            <div class="step-num" style="background:var(--maroon);">2</div>
+          </div>
+          <div class="paper-card maroon-top p-6">
+            <div class="text-3xl mb-4">📲</div>
+            <h3 class="font-serif font-700 text-base mb-2" style="color:var(--maroon);">Invite Tenants</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--sepia);">Send a magic WhatsApp link. Tenant fills their name, phone, and joins the room instantly. No app needed on their end.</p>
+          </div>
+        </div>
+
+        <div class="fade-up delay-3 text-center">
+          <div class="flex justify-center mb-5">
+            <div class="step-num" style="background:#065f46;">3</div>
+          </div>
+          <div class="paper-card emerald-top p-6">
+            <div class="text-3xl mb-4">✅</div>
+            <h3 class="font-serif font-700 text-base mb-2" style="color:#065f46;">Collect & Track</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--sepia);">Mark payments, send receipts, remind late tenants — everything managed from one clean screen.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════ -->
+<section class="ruled-section py-20 relative overflow-hidden">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-12 fade-up">
+      <div class="section-label justify-center mb-4">Testimonials</div>
+      <h2 class="heading-serif text-4xl mb-3">What Landlords Say</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="testi fade-up delay-1">
+        <div class="star-row mb-3">★★★★★</div>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--charcoal);">"Pehle sab diary mein likhta tha, ab sab phone mein hai. Ek click mein WhatsApp reminder jaata hai. Bahut achha app hai!"</p>
+        <div class="flex items-center gap-3">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">R</div>
+          <div>
+            <p class="font-700 text-sm" style="color:var(--ink);">Ramesh Sharma</p>
+            <p class="text-xs" style="color:var(--sepia);">Jaipur · 15 rooms</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi fade-up delay-2" style="border-top:3px solid var(--maroon);">
+        <div class="star-row mb-3">★★★★★</div>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--charcoal);">"Digital receipts are a lifesaver. My tenants WhatsApp me asking for receipts — I just tap once and it's sent. No printing, no fuss."</p>
+        <div class="flex items-center gap-3">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--maroon);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">A</div>
+          <div>
+            <p class="font-700 text-sm" style="color:var(--ink);">Anita Mehta</p>
+            <p class="text-xs" style="color:var(--sepia);">Mumbai · 22 rooms</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi fade-up delay-3">
+        <div class="star-row mb-3">★★★★★</div>
+        <p class="text-sm leading-relaxed mb-5" style="color:var(--charcoal);">"Electricity calculator is the best feature. Previously tenants argued about readings — now the app calculates it automatically. No more fights!"</p>
+        <div class="flex items-center gap-3">
+          <div style="width:36px;height:36px;border-radius:50%;background:#065f46;color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">S</div>
+          <div>
+            <p class="font-700 text-sm" style="color:var(--ink);">Sunil Gupta</p>
+            <p class="text-xs" style="color:var(--sepia);">Delhi · 30 rooms</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SUPPORT SECTION
+════════════════════════════════════════ -->
+<section id="support" class="py-24 relative" style="background:var(--paper);">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="text-center mb-16 fade-up">
+      <div class="section-label justify-center mb-4">Support</div>
+      <h2 class="heading-serif text-4xl md:text-5xl mb-4">We're Here to Help</h2>
+      <p class="text-base" style="color:var(--sepia);">Have a question? Our support team speaks Hindi and English. We respond within 2 hours.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 mb-12">
+
+      <div class="paper-card p-7 text-center fade-up delay-1">
+        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#eff6ff; border:1.5px solid #bfdbfe;">
+          <i class="fa-solid fa-envelope text-xl" style="color:var(--ink);"></i>
+        </div>
+        <h3 class="font-700 text-sm mb-2" style="color:var(--ink);">Email Support</h3>
+        <p class="text-xs mb-4" style="color:var(--sepia);">Send us your query, get a detailed reply within 2 hours on working days.</p>
+        <a href="mailto:support@roomkhata.in" class="contact-tag text-xs">
+          <i class="fa-solid fa-envelope text-xs" style="color:var(--ink);"></i>
+          support@roomkhata.in
+        </a>
+      </div>
+
+      <div class="paper-card maroon-top p-7 text-center fade-up delay-2">
+        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#fff1f2; border:1.5px solid #fecdd3;">
+          <i class="fa-brands fa-whatsapp text-xl" style="color:var(--maroon);"></i>
+        </div>
+        <h3 class="font-700 text-sm mb-2" style="color:var(--maroon);">WhatsApp Support</h3>
+        <p class="text-xs mb-4" style="color:var(--sepia);">Chat with our team directly on WhatsApp. Hindi aur English dono mein baat kar sakte ho.</p>
+        <a href="https://wa.me/919876543210" class="contact-tag text-xs" style="border-color:var(--maroon); color:var(--maroon);">
+          <i class="fa-brands fa-whatsapp text-xs"></i>
+          +91 98765 43210
+        </a>
+      </div>
+
+      <div class="paper-card emerald-top p-7 text-center fade-up delay-3">
+        <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#f0fdf4; border:1.5px solid #bbf7d0;">
+          <i class="fa-solid fa-book-open text-xl" style="color:#065f46;"></i>
+        </div>
+        <h3 class="font-700 text-sm mb-2" style="color:#065f46;">Help Docs</h3>
+        <p class="text-xs mb-4" style="color:var(--sepia);">Browse step-by-step guides, video tutorials, and feature walkthroughs in our Help Centre.</p>
+        <a href="#" class="contact-tag text-xs" style="border-color:#065f46; color:#065f46;">
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          Open Help Centre
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Download CTA banner -->
+    <div class="notepad-card p-8 md:p-12 text-center fade-up" style="background: linear-gradient(135deg, #1e3a8a 0%, #172d6e 100%); border:none; background-image:none;">
+      <p class="text-xs font-700 mb-3" style="color:rgba(255,255,255,.5); letter-spacing:.2em; text-transform:uppercase;">Ready to Start?</p>
+      <h3 class="font-serif font-black text-3xl md:text-4xl text-white mb-4">Start Managing Smarter Today</h3>
+      <p class="text-sm mb-8 max-w-md mx-auto" style="color:rgba(255,255,255,.6);">Join 50,000+ landlords who've replaced their paper bahi khata with Room Khata Pro. Free to start, always.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#" class="store-btn" style="box-shadow:4px 5px 0 rgba(255,255,255,.1);">
+          <i class="fa-brands fa-google-play store-btn-icon" style="color:#34d399;"></i>
+          <div class="store-btn-text"><p>GET IT ON</p><p>Google Play</p></div>
+        </a>
+        <a href="#" class="store-btn maroon-store" style="background:rgba(255,255,255,.1); box-shadow:4px 5px 0 rgba(0,0,0,.2);">
+          <i class="fa-brands fa-apple store-btn-icon"></i>
+          <div class="store-btn-text"><p>DOWNLOAD ON THE</p><p>App Store</p></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     FAQ SECTION
+════════════════════════════════════════ -->
+<section id="faq" class="ruled-section py-24">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <div class="text-center mb-14 fade-up">
+      <div class="section-label justify-center mb-4">FAQs</div>
+      <h2 class="heading-serif text-4xl mb-3">Frequently Asked Questions</h2>
+      <p style="color:var(--sepia);" class="text-base">Quick answers to questions we hear most often.</p>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="paper-card p-0 overflow-hidden fade-up delay-1" style="border-radius:8px;">
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Is Room Khata Pro free to use?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">Yes! Room Khata Pro is free to download and use for up to 5 rooms. Our Pro plan (₹299/month) unlocks unlimited rooms, electricity billing, expense tracking, and PDF export. No hidden charges — ever.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Do my tenants also need to download the app?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">No! That's the beauty of it. You simply share a magic link with your tenant via WhatsApp. They open the link in their browser, fill in their details, and they're onboarded. No downloads required on their end.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Is my data safe and private?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">Absolutely. All your data is encrypted and stored securely on Google Firebase servers. We never sell or share your data with third parties. You can export or delete your data at any time from within the app.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Which payment methods can tenants use?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">Tenants can pay through any UPI app — GPay, PhonePe, Paytm, BHIM, or direct bank transfer using your UPI ID. The app generates a QR code from your linked UPI ID so tenants can scan and pay instantly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Can I manage multiple buildings from one account?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">Yes! With the Pro plan, you can add unlimited buildings and rooms all under one account. Each building is managed separately with its own dashboard, and you get a consolidated overview from the home screen.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+          Does it work in Hindi too?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body">
+          <p class="text-sm leading-relaxed pb-2" style="color:var(--sepia);">Ji haan! Room Khata Pro supports both Hindi and English. You can switch languages from the Settings menu. Our support team also responds in Hindi — no need to struggle with English when you need help.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="py-14">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-4 gap-10 mb-10">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <a href="#" class="flex items-center gap-3 mb-4">
+          <div class="logo-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10L12 3l9 7"/><path d="M5 10v11a2 2 0 002 2h10a2 2 0 002-2V10"/>
+              <rect x="8" y="10" width="8" height="10" rx="1"/><path d="M10 13h4"/><path d="M10 16h4"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-serif font-black text-[17px] leading-tight" style="color:var(--ink);">Room<span style="color:var(--maroon)">Khata</span> Pro</p>
+            <p style="font-size:7px; letter-spacing:.25em; color:var(--sepia); font-weight:700; text-transform:uppercase; line-height:1;">RENT · TRACK · RELAX</p>
+          </div>
+        </a>
+        <p class="text-sm leading-relaxed max-w-xs" style="color:var(--sepia);">India's most trusted digital rent management app. Built for landlords who want clarity, not chaos.</p>
+        <!-- Social icons -->
+        <div class="flex gap-3 mt-5">
+          <a href="#" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:#fff; border:1.5px solid var(--rule); color:var(--ink);">
+            <i class="fa-brands fa-instagram text-sm"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:#fff; border:1.5px solid var(--rule); color:var(--ink);">
+            <i class="fa-brands fa-youtube text-sm"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:#fff; border:1.5px solid var(--rule); color:#25D366;">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:#fff; border:1.5px solid var(--rule); color:var(--ink);">
+            <i class="fa-brands fa-x-twitter text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links: App -->
+      <div>
+        <p class="text-xs font-700 uppercase tracking-widest mb-4" style="color:var(--sepia);">App</p>
+        <ul class="space-y-2.5">
+          <li><a href="#features" class="text-sm hover:underline transition-colors" style="color:var(--charcoal);">Features</a></li>
+          <li><a href="#download" class="text-sm hover:underline transition-colors" style="color:var(--charcoal);">Download</a></li>
+          <li><a href="#" class="text-sm hover:underline transition-colors" style="color:var(--charcoal);">Pricing</a></li>
+          <li><a href="#" class="text-sm hover:underline transition-colors" style="color:var(--charcoal);">Changelog</a></li>
+        </ul>
+      </div>
+
+      <!-- Links: Legal -->
+      <div>
+        <p class="text-xs font-700 uppercase tracking-widest mb-4" style="color:var(--sepia);">Legal & Help</p>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-sm hover:underline" style="color:var(--charcoal);">Privacy Policy</a></li>
+          <li><a href="#" class="text-sm hover:underline" style="color:var(--charcoal);">Terms of Service</a></li>
+          <li><a href="#faq" class="text-sm hover:underline" style="color:var(--charcoal);">FAQs</a></li>
+          <li><a href="#support" class="text-sm hover:underline" style="color:var(--charcoal);">Contact Support</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-3" style="border-top: 1.5px solid var(--rule);">
+      <p class="text-xs" style="color:var(--sepia);">© 2025 Room Khata Pro. All rights reserved. Made with ❤️ in India 🇮🇳</p>
+      <div class="flex items-center gap-6">
+        <a href="mailto:support@roomkhata.in" class="text-xs hover:underline" style="color:var(--sepia);">support@roomkhata.in</a>
+        <span style="color:var(--rule);">|</span>
+        <p class="text-xs" style="color:var(--sepia);">Version 2.1.0</p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  // ─── MOBILE NAV TOGGLE ───
+  function toggleNav() {
+    document.getElementById('mobile-nav').classList.toggle('open');
+  }
+
+  // ─── FAQ ACCORDION ───
+  function toggleFaq(trigger) {
+    const body = trigger.nextElementSibling;
+    const isOpen = trigger.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-trigger.open').forEach(t => {
+      t.classList.remove('open');
+      t.nextElementSibling.classList.remove('open');
+    });
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      trigger.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // ─── INTERSECTION OBSERVER FOR FADE-UP ───
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ─── STICKY NAV SHADOW ───
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,.08)'
+      : '';
+  });
+</script>
+
+</body>
+</html>
